@@ -24,6 +24,6 @@ export default () => {
             formData={formData} 
             uiSchema={uiSchema}
             onChange={({ formData }) => setFormData(formData)}
-            onSubmit={() => console.log('form submitted')}
+            onSubmit={() => console.log('form submitted',formData)}
           />;
 };

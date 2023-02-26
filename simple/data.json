@@ -41,10 +41,10 @@
             "service":{
                 "type":"object",
                 "required":[
-                    "RequestPreScript"
+                    "requestPreScript"
                 ],
                 "properties":{
-                    "RequestPreScript":{
+                    "requestPreScript":{
                         "comment":"前置脚本",
                         "type":"string",
                         "title":"前置脚本",
