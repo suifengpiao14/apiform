@@ -21,19 +21,19 @@
                 "type":"string",
                 "title":"请求方法",
                 "default":"POST",
-                "readOnly":"true"
+                "readOnly":true
             },
             "path":{
                 "type":"string",
                 "title":"请求路径",
                 "default":"/admin/v1/ad/list",
-                "readOnly":"true"
+                "readOnly":true
             },
             "description":{
                 "type":"string",
                 "title":"描述",
                 "default":"广告列表",
-                "readOnly":"true"
+                "readOnly":true
             },
             "service":{
                 "type":"object",
@@ -46,7 +46,7 @@
                         "type":"string",
                         "title":"前置脚本",
                         "default":"var signature=\"javascript\"",
-                        "readOnly":"true"
+                        "readOnly":true
                     },
                     "variables":{
                         "type":"array",
@@ -66,7 +66,15 @@
                                     "title":"说明"
                                 }
                             }
-                        }
+                        },
+                        "readOnly":true,
+                        "example":[
+                            {
+                                "name":"serviceId",
+                                "value":"1234,xyuientg,74ere",
+                                "description":"服务ID"
+                            }
+                        ]
                     },
                     "server":{
                         "type":"string",
@@ -96,26 +104,31 @@
             },
             "advertiserId":{
                 "type":"string",
+                "format":"int",
                 "title":"广告主",
                 "example":"123"
             },
             "beginAt":{
                 "type":"string",
+                "format":"datetime",
                 "title":"可以投放开始时间",
                 "example":"2023-01-12 00:00:00"
             },
             "endAt":{
                 "type":"string",
+                "format":"datetime",
                 "title":"投放结束时间",
                 "example":"2023-01-30 00:00:00"
             },
             "index":{
                 "type":"string",
+                "format":"int",
                 "title":"页索引,0开始",
                 "default":"0"
             },
             "size":{
                 "type":"string",
+                "format":"int",
                 "title":"每页数量",
                 "default":"10"
             },
