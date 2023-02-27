@@ -1,6 +1,10 @@
 import React from 'react';
-import MaterialJsonSchemaForm from 'react-jsonschema-form-material-ui';
+import { withTheme } from '@rjsf/core';
+import Theme from '@rjsf/mui';
+import validator from "@rjsf/validator-ajv8";
+// Make modifications to the theme with your own fields and widgets
 
+const Form = withTheme(Theme);
 //import schema from '../simple/schema.json';
 //import uiSchema from '../simple/ui-schema.json';
 //import givenFormData from '../simple/form-data.json';
@@ -13,17 +17,18 @@ export default () => {
   const router = useRouter();
   const { api } = router.query;
   //const data={schema:{},example:{},uiSchema:{}}
-  const error=null
+  const error = null
   //const { data, error } = useSWR(api, fetcher)
   if (error) return <div>Failed to load</div>
   if (!data) return <div>Loading...</div>
-  const{schema,example,uiSchema}=data
+  const { schema, example, uiSchema } = data
   const [formData, setFormData] = React.useState(example);
-  return <MaterialJsonSchemaForm 
-            schema={schema}  
-            formData={formData} 
-            uiSchema={uiSchema}
-            onChange={({ formData }) => setFormData(formData)}
-            onSubmit={() => console.log('form submitted',formData)}
-          />;
+  return <Form
+    schema={schema}
+    formData={formData}
+    uiSchema={uiSchema}
+    validator={validator}
+    onChange={({ formData }) => setFormData(formData)}
+    onSubmit={() => console.log('form submitted', formData)}
+  />;
 };

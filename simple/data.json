@@ -1,8 +1,8 @@
 {
-    "schema":{
-        "$schema":"http://json-schema.org/draft-07/schema#",
-        "type":"object",
-        "required":[
+    "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "required": [
             "method",
             "path",
             "description",
@@ -16,124 +16,144 @@
             "appid",
             "signature"
         ],
-        "properties":{
-            "method":{
-                "comment":"请求方法",
-                "type":"string",
-                "title":"请求方法",
-                "description":"请求方法",
-                "default":"POST"
+        "properties": {
+            "method": {
+                "type": "string",
+                "title": "请求方法",
+                "default": "POST",
+                "readOnly": "true"
             },
-            "path":{
-                "comment":"请求路径",
-                "type":"string",
-                "title":"请求路径",
-                "description":"请求路径",
-                "default":"/admin/v1/ad/list"
+            "path": {
+                "type": "string",
+                "title": "请求路径",
+                "default": "/admin/v1/ad/list",
+                "readOnly": "true"
             },
-            "description":{
-                "comment":"描述",
-                "type":"string",
-                "title":"描述",
-                "description":"描述",
-                "default":"广告列表"
+            "description": {
+                "type": "string",
+                "title": "描述",
+                "default": "广告列表",
+                "readOnly": "true"
             },
-            "service":{
-                "type":"object",
-                "required":[
-                    "requestPreScript"
+            "service": {
+                "type": "object",
+                "required": [
+                    "requestPreScript",
+                    "server"
                 ],
-                "properties":{
-                    "requestPreScript":{
-                        "comment":"前置脚本",
-                        "type":"string",
-                        "title":"前置脚本",
-                        "description":"前置脚本",
-                        "default":"var signature=\"javascript\""
+                "properties": {
+                    "requestPreScript": {
+                        "type": "string",
+                        "title": "前置脚本",
+                        "default": "var signature=\"javascript\"",
+                        "readOnly": "true"
+                    },
+                    "variables": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "title": "变量名称"
+                                },
+                                "value": {
+                                    "type": "string",
+                                    "title": "变量值"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "title": "说明"
+                                }
+                            }
+                        }
+                    },
+                    "server": {
+                        "type": "string",
+                        "enum": [
+                            "dev",
+                            "test",
+                            "prod"
+                        ],
+                        "enumNames": [
+                            "dev-开发环境-",
+                            "test-测试环境-",
+                            "prod-正式环境-"
+                        ],
+                        "title": "请求地址",
+                        "default": "dev"
                     }
                 }
             },
-            "title":{
-                "comment":"广告标题",
-                "type":"string",
-                "title":"广告标题",
-                "description":"广告标题",
-                "example":"新年豪礼"
+            "title": {
+                "type": "string",
+                "title": "广告标题",
+                "example": "新年豪礼"
             },
-            "advertiserId":{
-                "comment":"广告主",
-                "type":"string",
-                "title":"广告主",
-                "description":"广告主",
-                "example":"123"
+            "advertiserId": {
+                "type": "string",
+                "title": "广告主",
+                "example": "123"
             },
-            "beginAt":{
-                "comment":"可以投放开始时间",
-                "type":"string",
-                "title":"可以投放开始时间",
-                "description":"可以投放开始时间",
-                "example":"2023-01-12 00:00:00"
+            "beginAt": {
+                "type": "string",
+                "title": "可以投放开始时间",
+                "example": "2023-01-12 00:00:00"
             },
-            "endAt":{
-                "comment":"投放结束时间",
-                "type":"string",
-                "title":"投放结束时间",
-                "description":"投放结束时间",
-                "example":"2023-01-30 00:00:00"
+            "endAt": {
+                "type": "string",
+                "title": "投放结束时间",
+                "example": "2023-01-30 00:00:00"
             },
-            "index":{
-                "comment":"页索引,0开始",
-                "type":"string",
-                "title":"页索引,0开始",
-                "description":"页索引,0开始",
-                "default":"0"
+            "index": {
+                "type": "string",
+                "title": "页索引,0开始",
+                "default": "0"
             },
-            "size":{
-                "comment":"每页数量",
-                "type":"string",
-                "title":"每页数量",
-                "description":"每页数量",
-                "default":"10"
+            "size": {
+                "type": "string",
+                "title": "每页数量",
+                "default": "10"
             },
-            "content-type":{
-                "comment":"文件格式",
-                "type":"string",
-                "title":"文件格式",
-                "description":"文件格式",
-                "default":"application/json"
+            "content-type": {
+                "type": "string",
+                "title": "文件格式",
+                "default": "application/json"
             },
-            "appid":{
-                "comment":"访问服务的备案id",
-                "type":"string",
-                "title":"访问服务的备案id",
-                "description":"访问服务的备案id"
+            "appid": {
+                "type": "string",
+                "title": "访问服务的备案id"
             },
-            "signature":{
-                "comment":"签名,外网访问需开启签名",
-                "type":"string",
-                "title":"签名,外网访问需开启签名",
-                "description":"签名,外网访问需开启签名"
+            "signature": {
+                "type": "string",
+                "title": "签名,外网访问需开启签名"
             }
         }
     },
-    "example":{
-        "method":"POST",
-        "path":"/admin/v1/ad/list",
-        "description":"广告列表",
-        "service":{
-            "RequestPreScript":"var signature=\"javascript\""
+    "example": {
+        "method": "POST",
+        "path": "/admin/v1/ad/list",
+        "description": "广告列表",
+        "service": {
+            "requestPreScript": "var signature=\"javascript\"",
+            "variables": [
+                {
+                    "name": "serviceId",
+                    "value": "1234,xyuientg,74ere",
+                    "description": "服务ID"
+                }
+            ],
+            "server": "dev"
         },
-        "title":"新年豪礼",
-        "advertiserId":"123",
-        "beginAt":"2023-01-12 00:00:00",
-        "endAt":"2023-01-30 00:00:00",
-        "index":"0",
-        "size":"10",
-        "content-type":"application/json",
-        "appid":"",
-        "signature":""
+        "title": "新年豪礼",
+        "advertiserId": "123",
+        "beginAt": "2023-01-12 00:00:00",
+        "endAt": "2023-01-30 00:00:00",
+        "index": "0",
+        "size": "10",
+        "content-type": "application/json",
+        "appid": "",
+        "signature": ""
     },
-    "uiSchema":{
-
-    }
+    "uiSchema": {}
 }
