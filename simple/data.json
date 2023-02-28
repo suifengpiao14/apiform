@@ -1,8 +1,8 @@
 {
-    "schema":{
-        "$schema":"http://json-schema.org/draft-07/schema#",
-        "type":"object",
-        "required":[
+    "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "required": [
             "method",
             "path",
             "description",
@@ -16,163 +16,161 @@
             "appid",
             "signature"
         ],
-        "properties":{
-            "method":{
-                "type":"string",
-                "title":"请求方法",
-                "default":"POST",
-                "readOnly":true
+        "properties": {
+            "method": {
+                "type": "string",
+                "title": "请求方法",
+                "default": "POST",
+                "readOnly": true
             },
-            "path":{
-                "type":"string",
-                "title":"请求路径",
-                "default":"/admin/v1/ad/list",
-                "readOnly":true
+            "path": {
+                "type": "string",
+                "title": "请求路径",
+                "default": "/admin/v1/ad/list",
+                "readOnly": true
             },
-            "description":{
-                "type":"string",
-                "title":"描述",
-                "default":"广告列表",
-                "readOnly":true
+            "description": {
+                "type": "string",
+                "title": "描述",
+                "default": "广告列表",
+                "readOnly": true
             },
-            "service":{
-                "type":"object",
-                "required":[
+            "service": {
+                "type": "object",
+                "required": [
                     "requestPreScript",
                     "server"
                 ],
-                "properties":{
-                    "requestPreScript":{
-                        "type":"string",
-                        "title":"前置脚本",
-                        "default":"var signature=\"javascript\"",
-                        "readOnly":true
+                "properties": {
+                    "requestPreScript": {
+                        "type": "string",
+                        "title": "前置脚本",
+                        "default": "var signature=\"javascript\"",
+                        "readOnly": true
                     },
-                    "variables":{
-                        "type":"array",
-                        "items":{
-                            "type":"object",
-                            "properties":{
-                                "name":{
-                                    "type":"string",
-                                    "title":"变量名称"
+                    "variables": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "title": "变量名称"
                                 },
-                                "value":{
-                                    "type":"string",
-                                    "title":"变量值"
+                                "value": {
+                                    "type": "string",
+                                    "title": "变量值"
                                 },
-                                "description":{
-                                    "type":"string",
-                                    "title":"说明"
+                                "description": {
+                                    "type": "string",
+                                    "title": "说明"
                                 }
                             }
                         },
-                        "readOnly":true,
-                        "example":[
+                        "readOnly": true,
+                        "example": [
                             {
-                                "name":"serviceId",
-                                "value":"1234,xyuientg,74ere",
-                                "description":"服务ID"
+                                "name": "serviceId",
+                                "value": "1234,xyuientg,74ere",
+                                "description": "服务ID"
                             }
                         ]
                     },
-                    "server":{
-                        "type":"string",
-                        "title":"请求地址",
-                        "default":"dev",
-                        "oneOf":[
+                    "server": {
+                        "type": "string",
+                        "title": "请求地址",
+                        "default": "dev",
+                        "oneOf": [
                             {
-                                "const":"dev",
-                                "title":"dev-开发环境"
+                                "const": "dev",
+                                "title": "dev-开发环境"
                             },
                             {
-                                "const":"test",
-                                "title":"test-测试环境"
+                                "const": "test",
+                                "title": "test-测试环境"
                             },
                             {
-                                "const":"prod",
-                                "title":"prod-正式环境"
+                                "const": "prod",
+                                "title": "prod-正式环境"
                             }
                         ]
                     }
                 }
             },
-            "title":{
-                "type":"string",
-                "title":"广告标题",
-                "example":"新年豪礼"
+            "title": {
+                "type": "string",
+                "title": "广告标题",
+                "example": "新年豪礼"
             },
-            "advertiserId":{
-                "type":"string",
-                "format":"int",
-                "title":"广告主",
-                "example":"123"
+            "advertiserId": {
+                "type": "string",
+                "format": "int",
+                "title": "广告主",
+                "example": "123"
             },
-            "beginAt":{
-                "type":"string",
-                "format":"datetime",
-                "title":"可以投放开始时间",
-                "example":"2023-01-12 00:00:00"
+            "beginAt": {
+                "type": "string",
+                "format": "datetime",
+                "title": "可以投放开始时间",
+                "example": "2023-01-12 00:00:00"
             },
-            "endAt":{
-                "type":"string",
-                "format":"datetime",
-                "title":"投放结束时间",
-                "example":"2023-01-30 00:00:00"
+            "endAt": {
+                "type": "string",
+                "format": "datetime",
+                "title": "投放结束时间",
+                "example": "2023-01-30 00:00:00"
             },
-            "index":{
-                "type":"string",
-                "format":"int",
-                "title":"页索引,0开始",
-                "default":"0"
+            "index": {
+                "type": "string",
+                "format": "int",
+                "title": "页索引,0开始",
+                "default": "0"
             },
-            "size":{
-                "type":"string",
-                "format":"int",
-                "title":"每页数量",
-                "default":"10"
+            "size": {
+                "type": "string",
+                "format": "int",
+                "title": "每页数量",
+                "default": "10"
             },
-            "content-type":{
-                "type":"string",
-                "title":"文件格式",
-                "default":"application/json"
+            "content-type": {
+                "type": "string",
+                "title": "文件格式",
+                "default": "application/json"
             },
-            "appid":{
-                "type":"string",
-                "title":"访问服务的备案id"
+            "appid": {
+                "type": "string",
+                "title": "访问服务的备案id"
             },
-            "signature":{
-                "type":"string",
-                "title":"签名,外网访问需开启签名"
+            "signature": {
+                "type": "string",
+                "title": "签名,外网访问需开启签名"
             }
         }
     },
-    "example":{
-        "method":"POST",
-        "path":"/admin/v1/ad/list",
-        "description":"广告列表",
-        "service":{
-            "requestPreScript":"var signature=\"javascript\"",
-            "variables":[
+    "example": {
+        "method": "POST",
+        "path": "/admin/v1/ad/list",
+        "description": "广告列表",
+        "service": {
+            "requestPreScript": "var signature=\"javascript\"",
+            "variables": [
                 {
-                    "name":"serviceId",
-                    "value":"1234,xyuientg,74ere",
-                    "description":"服务ID"
+                    "name": "serviceId",
+                    "value": "1234,xyuientg,74ere",
+                    "description": "服务ID"
                 }
             ],
-            "server":"dev"
+            "server": "dev"
         },
-        "title":"新年豪礼",
-        "advertiserId":"123",
-        "beginAt":"2023-01-12 00:00:00",
-        "endAt":"2023-01-30 00:00:00",
-        "index":"0",
-        "size":"10",
-        "content-type":"application/json",
-        "appid":"",
-        "signature":""
+        "title": "新年豪礼",
+        "advertiserId": "123",
+        "beginAt": "2023-01-12 00:00:00",
+        "endAt": "2023-01-30 00:00:00",
+        "index": "0",
+        "size": "10",
+        "content-type": "application/json",
+        "appid": "",
+        "signature": ""
     },
-    "uiSchema":{
-
-    }
+    "uiSchema": {}
 }

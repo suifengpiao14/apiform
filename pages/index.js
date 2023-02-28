@@ -29,6 +29,11 @@ export default () => {
     uiSchema={uiSchema}
     validator={validator}
     onChange={({ formData }) => setFormData(formData)}
-    onSubmit={() => console.log('form submitted', formData)}
+    onSubmit={({ formData }) => console.log('form submitted', formData)}
   />;
 };
+
+function Request(formData) {
+  const { } = formData
+  return
+}
