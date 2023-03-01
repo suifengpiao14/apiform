@@ -247,7 +247,7 @@
                     "name": "dev",
                     "host": "http://localhost:801",
                     "description": "开发环境",
-                    "proxy": "",
+                    "proxy": "http://127.0.0.1:809",
                     "extensionIds": ""
                 },
                 {

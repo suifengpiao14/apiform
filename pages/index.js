@@ -4,6 +4,7 @@ import Theme from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
 import axios from 'axios';
 import { runBefore,runAfter } from '../lib/functions';
+import URL from 'url-parse'
 // Make modifications to the theme with your own fields and widgets
 
 const Form = withTheme(Theme);
@@ -44,7 +45,7 @@ export default () => {
  */
 
 function request(formData) {
-  const { service: { method, path, requestPreScript, variables, server:serverName, servers, requestPostScript }, ...data } = formData
+  const { service: { method, path, requestPreScript, variables, server:serverName, serverData:servers, requestPostScript }, ...data } = formData
   const server = filterServer(serverName,servers)
   data.variables=variables
   runBefore(requestPreScript,data)
@@ -62,10 +63,12 @@ function request(formData) {
   timeout: 30000000,
   withCredentials:true,
    }
-   if (data.proxy!=""){
-    const url = new URL(data.proxy);
+   if (server.proxy!=""){
+    debugger
+    const url = new URL(server.proxy);
+    const protocol = url.protocol.replace(":","")
     config.proxy={
-      protocol:url.protocol,
+      protocol:protocol,
       host:url.host,
       port:url.port
     }
@@ -78,7 +81,7 @@ function request(formData) {
 
 function filterServer(name,servers){
   let server={}
-  servers.array.forEach(element => {
+  servers.forEach(element => {
     if (element.name==name){
       server = element
     }
