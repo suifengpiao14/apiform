@@ -2,6 +2,8 @@ import React from 'react';
 import { withTheme } from '@rjsf/core';
 import Theme from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
+import axios from 'axios';
+import { runBefore,runAfter } from '../lib/functions';
 // Make modifications to the theme with your own fields and widgets
 
 const Form = withTheme(Theme);
@@ -29,41 +31,11 @@ export default () => {
     uiSchema={uiSchema}
     validator={validator}
     onChange={({ formData }) => setFormData(formData)}
-    onSubmit={({ formData }) => console.log('form submitted', formData)}
+    onSubmit={({ formData }) => request(formData)}
   />;
 };
 
 
-/**
- * {
-        
-        "service": {
-        "method": "POST",
-        "path": "/admin/v1/ad/list",
-        "description": "广告列表",
-            "requestPreScript": "var signature=\"javascript\"",
-            "variables": [
-                {
-                    "name": "serviceId",
-                    "value": "1234,xyuientg,74ere",
-                    "description": "服务ID"
-                }
-            ],
-            "server": "dev"
-        },
-        "title": "新年豪礼",
-        "advertiserId": "123",
-        "beginAt": "2023-01-12 00:00:00",
-        "endAt": "2023-01-30 00:00:00",
-        "index": "0",
-        "size": "10",
-        "content-type": "application/json",
-        "appid": "",
-        "signature": ""
-    }
- * 
- * 
- */
 
 /**
  * 
@@ -71,7 +43,45 @@ export default () => {
  * @returns 
  */
 
-function Request(formData) {
-  const { service: { method, path, description, requestPreScript, variables, server, servers, requestPostScript }, ...data } = formData
+function request(formData) {
+  const { service: { method, path, requestPreScript, variables, server:serverName, servers, requestPostScript }, ...data } = formData
+  const server = filterServer(serverName,servers)
+  data.variables=variables
+  runBefore(requestPreScript,data)
+  const config={
+    url: path,
+    method,
+    baseURL:server.host,
+    transformRequest:[
+      function(data,headers){
+      return data
+    }
+  ],
+  headers:data.header,
+  params:data.query,
+  timeout: 30000000,
+  withCredentials:true,
+   }
+   if (data.proxy!=""){
+    const url = new URL(data.proxy);
+    config.proxy={
+      protocol:url.protocol,
+      host:url.host,
+      port:url.port
+    }
+   }
+  axios.request(config).then(res=>{
+    runAfter(requestPostScript,res)
+  })
   return
+}
+
+function filterServer(name,servers){
+  let server={}
+  servers.array.forEach(element => {
+    if (element.name==name){
+      server = element
+    }
+  });
+  return server
 }
