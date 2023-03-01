@@ -2,50 +2,118 @@
     "schema": {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": [
-            "method",
-            "path",
-            "description",
-            "title",
-            "advertiserId",
-            "beginAt",
-            "endAt",
-            "index",
-            "size",
-            "content-type",
-            "appid",
-            "signature"
-        ],
         "properties": {
-            "method": {
-                "type": "string",
-                "title": "请求方法",
-                "default": "POST",
-                "readOnly": true
+            "header": {
+                "type": "object",
+                "required": [
+                    "content-type",
+                    "appid",
+                    "signature"
+                ],
+                "properties": {
+                    "content-type": {
+                        "type": "string",
+                        "title": "文件格式",
+                        "description": "文件格式",
+                        "default": "application/json"
+                    },
+                    "appid": {
+                        "type": "string",
+                        "title": "访问服务的备案id",
+                        "description": "访问服务的备案id"
+                    },
+                    "signature": {
+                        "type": "string",
+                        "title": "签名,外网访问需开启签名",
+                        "description": "签名,外网访问需开启签名"
+                    }
+                }
             },
-            "path": {
-                "type": "string",
-                "title": "请求路径",
-                "default": "/admin/v1/ad/list",
-                "readOnly": true
-            },
-            "description": {
-                "type": "string",
-                "title": "描述",
-                "default": "广告列表",
-                "readOnly": true
+            "body": {
+                "type": "object",
+                "required": [
+                    "title",
+                    "advertiserId",
+                    "beginAt",
+                    "endAt",
+                    "index",
+                    "size"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "title": "广告标题",
+                        "description": "广告标题",
+                        "example": "新年豪礼"
+                    },
+                    "advertiserId": {
+                        "type": "string",
+                        "format": "int",
+                        "title": "广告主",
+                        "description": "广告主",
+                        "example": "123"
+                    },
+                    "beginAt": {
+                        "type": "string",
+                        "format": "datetime",
+                        "title": "可以投放开始时间",
+                        "description": "可以投放开始时间",
+                        "example": "2023-01-12 00:00:00"
+                    },
+                    "endAt": {
+                        "type": "string",
+                        "format": "datetime",
+                        "title": "投放结束时间",
+                        "description": "投放结束时间",
+                        "example": "2023-01-30 00:00:00"
+                    },
+                    "index": {
+                        "type": "string",
+                        "format": "int",
+                        "title": "页索引,0开始",
+                        "description": "页索引,0开始",
+                        "default": "0"
+                    },
+                    "size": {
+                        "type": "string",
+                        "format": "int",
+                        "title": "每页数量",
+                        "description": "每页数量",
+                        "default": "10"
+                    }
+                }
             },
             "service": {
                 "type": "object",
                 "required": [
-                    "requestPreScript",
+                    "path",
+                    "method",
+                    "description",
                     "server"
                 ],
                 "properties": {
+                    "path": {
+                        "type": "string",
+                        "title": "请求路径",
+                        "default": "/admin/v1/ad/list",
+                        "readOnly": true
+                    },
+                    "method": {
+                        "type": "string",
+                        "title": "请求方法",
+                        "default": "POST",
+                        "readOnly": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "描述",
+                        "default": "广告列表",
+                        "readOnly": true
+                    },
                     "requestPreScript": {
                         "type": "string",
                         "title": "前置脚本",
-                        "default": "var signature=\"javascript\"",
+                        "default": "var signature=\\\"javascript\\\"",
                         "readOnly": true
                     },
                     "variables": {
@@ -94,65 +162,78 @@
                                 "title": "prod-正式环境"
                             }
                         ]
+                    },
+                    "serverData": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "title": "名称"
+                                },
+                                "host": {
+                                    "type": "string",
+                                    "title": "地址"
+                                },
+                                "proxy": {
+                                    "type": "string",
+                                    "title": "代理"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "title": "说明"
+                                }
+                            }
+                        },
+                        "readOnly": true,
+                        "example": [
+                            {
+                                "name": "dev",
+                                "host": "http://localhost:801",
+                                "description": "开发环境",
+                                "proxy": "",
+                                "extensionIds": ""
+                            },
+                            {
+                                "name": "test",
+                                "host": "test.domain.com",
+                                "description": "测试环境",
+                                "proxy": "",
+                                "extensionIds": ""
+                            },
+                            {
+                                "name": "prod",
+                                "host": "http://domain.com",
+                                "description": "正式环境",
+                                "proxy": "",
+                                "extensionIds": ""
+                            }
+                        ]
                     }
                 }
-            },
-            "title": {
-                "type": "string",
-                "title": "广告标题",
-                "example": "新年豪礼"
-            },
-            "advertiserId": {
-                "type": "string",
-                "format": "int",
-                "title": "广告主",
-                "example": "123"
-            },
-            "beginAt": {
-                "type": "string",
-                "format": "datetime",
-                "title": "可以投放开始时间",
-                "example": "2023-01-12 00:00:00"
-            },
-            "endAt": {
-                "type": "string",
-                "format": "datetime",
-                "title": "投放结束时间",
-                "example": "2023-01-30 00:00:00"
-            },
-            "index": {
-                "type": "string",
-                "format": "int",
-                "title": "页索引,0开始",
-                "default": "0"
-            },
-            "size": {
-                "type": "string",
-                "format": "int",
-                "title": "每页数量",
-                "default": "10"
-            },
-            "content-type": {
-                "type": "string",
-                "title": "文件格式",
-                "default": "application/json"
-            },
-            "appid": {
-                "type": "string",
-                "title": "访问服务的备案id"
-            },
-            "signature": {
-                "type": "string",
-                "title": "签名,外网访问需开启签名"
             }
         }
     },
     "example": {
-        "method": "POST",
-        "path": "/admin/v1/ad/list",
-        "description": "广告列表",
+        "header": {
+            "content-type": "application/json",
+            "appid": "",
+            "signature": ""
+        },
+        "body": {
+            "title": "新年豪礼",
+            "advertiserId": "123",
+            "beginAt": "2023-01-12 00:00:00",
+            "endAt": "2023-01-30 00:00:00",
+            "index": "0",
+            "size": "10"
+        },
         "service": {
-            "requestPreScript": "var signature=\"javascript\"",
+            "path": "/admin/v1/ad/list",
+            "method": "POST",
+            "description": "广告列表",
+            "requestPreScript": "var signature=\\\"javascript\\\"",
             "variables": [
                 {
                     "name": "serviceId",
@@ -160,17 +241,37 @@
                     "description": "服务ID"
                 }
             ],
-            "server": "dev"
-        },
-        "title": "新年豪礼",
-        "advertiserId": "123",
-        "beginAt": "2023-01-12 00:00:00",
-        "endAt": "2023-01-30 00:00:00",
-        "index": "0",
-        "size": "10",
-        "content-type": "application/json",
-        "appid": "",
-        "signature": ""
+            "server": "dev",
+            "serverData": [
+                {
+                    "name": "dev",
+                    "host": "http://localhost:801",
+                    "description": "开发环境",
+                    "proxy": "",
+                    "extensionIds": ""
+                },
+                {
+                    "name": "test",
+                    "host": "test.domain.com",
+                    "description": "测试环境",
+                    "proxy": "",
+                    "extensionIds": ""
+                },
+                {
+                    "name": "prod",
+                    "host": "http://domain.com",
+                    "description": "正式环境",
+                    "proxy": "",
+                    "extensionIds": ""
+                }
+            ]
+        }
     },
-    "uiSchema": {}
+    "uiSchema": {
+        "service": {
+            "serverData": {
+                "ui:widget": "hidden"
+            }
+        }
+    }
 }

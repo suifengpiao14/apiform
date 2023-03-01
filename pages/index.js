@@ -33,7 +33,45 @@ export default () => {
   />;
 };
 
+
+/**
+ * {
+        
+        "service": {
+        "method": "POST",
+        "path": "/admin/v1/ad/list",
+        "description": "广告列表",
+            "requestPreScript": "var signature=\"javascript\"",
+            "variables": [
+                {
+                    "name": "serviceId",
+                    "value": "1234,xyuientg,74ere",
+                    "description": "服务ID"
+                }
+            ],
+            "server": "dev"
+        },
+        "title": "新年豪礼",
+        "advertiserId": "123",
+        "beginAt": "2023-01-12 00:00:00",
+        "endAt": "2023-01-30 00:00:00",
+        "index": "0",
+        "size": "10",
+        "content-type": "application/json",
+        "appid": "",
+        "signature": ""
+    }
+ * 
+ * 
+ */
+
+/**
+ * 
+ * @param {*} formData 
+ * @returns 
+ */
+
 function Request(formData) {
-  const { } = formData
+  const { service: { method, path, description, requestPreScript, variables, server, servers, requestPostScript }, ...data } = formData
   return
 }
