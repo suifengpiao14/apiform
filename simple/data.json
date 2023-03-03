@@ -14,18 +14,15 @@
                     "content-type": {
                         "type": "string",
                         "title": "文件格式",
-                        "description": "文件格式",
                         "default": "application/json"
                     },
                     "appid": {
                         "type": "string",
-                        "title": "访问服务的备案id",
-                        "description": "访问服务的备案id"
+                        "title": "访问服务的备案id"
                     },
                     "signature": {
                         "type": "string",
-                        "title": "签名,外网访问需开启签名",
-                        "description": "签名,外网访问需开启签名"
+                        "title": "签名,外网访问需开启签名"
                     }
                 }
             },
@@ -43,42 +40,36 @@
                     "title": {
                         "type": "string",
                         "title": "广告标题",
-                        "description": "广告标题",
                         "example": "新年豪礼"
                     },
                     "advertiserId": {
                         "type": "string",
                         "format": "int",
                         "title": "广告主",
-                        "description": "广告主",
                         "example": "123"
                     },
                     "beginAt": {
                         "type": "string",
                         "format": "datetime",
                         "title": "可以投放开始时间",
-                        "description": "可以投放开始时间",
                         "example": "2023-01-12 00:00:00"
                     },
                     "endAt": {
                         "type": "string",
                         "format": "datetime",
                         "title": "投放结束时间",
-                        "description": "投放结束时间",
                         "example": "2023-01-30 00:00:00"
                     },
                     "index": {
                         "type": "string",
                         "format": "int",
                         "title": "页索引,0开始",
-                        "description": "页索引,0开始",
                         "default": "0"
                     },
                     "size": {
                         "type": "string",
                         "format": "int",
                         "title": "每页数量",
-                        "description": "每页数量",
                         "default": "10"
                     }
                 }
@@ -123,19 +114,21 @@
                             "properties": {
                                 "name": {
                                     "type": "string",
-                                    "title": "变量名称"
+                                    "title": "变量名称",
+                                    "readOnly": true
                                 },
                                 "value": {
                                     "type": "string",
-                                    "title": "变量值"
+                                    "title": "变量值",
+                                    "readOnly": false
                                 },
                                 "description": {
                                     "type": "string",
-                                    "title": "说明"
+                                    "title": "说明",
+                                    "readOnly": true
                                 }
                             }
                         },
-                        "readOnly": true,
                         "example": [
                             {
                                 "name": "serviceId",
@@ -247,7 +240,7 @@
                     "name": "dev",
                     "host": "http://localhost:801",
                     "description": "开发环境",
-                    "proxy": "http://127.0.0.1:809",
+                    "proxy": "",
                     "extensionIds": ""
                 },
                 {
@@ -268,9 +261,24 @@
         }
     },
     "uiSchema": {
+        "ui:order": [
+            "service",
+            "header",
+            "body",
+            "*"
+        ],
         "service": {
             "serverData": {
-                "ui:widget": "hidden"
+                "ui:classNames": "hidden"
+            },
+            "variables": {
+                "ui:options": {
+                    "addable": false,
+                    "removable": false
+                },
+                "value": {
+                    "ui:widget": "textarea"
+                }
             }
         }
     }
