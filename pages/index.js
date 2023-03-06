@@ -11,13 +11,11 @@ const Form = withTheme(Theme);
 //import schema from '../simple/schema.json';
 //import uiSchema from '../simple/ui-schema.json';
 //import givenFormData from '../simple/form-data.json';
-import data from '../simple/data.json';
+//import data from '../simple/data.json';
 import { useRouter } from 'next/router';
-import useSWR from 'swr'
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 
-const Index = () => {
+export default () => {
   const [responseData, setResponseData] = useState({})
   const [formData, setFormData] = React.useState({});
   const [isLoading, setLoading] = useState(false)
@@ -109,4 +107,3 @@ function filterServer(name, servers) {
 }
 
 
-export default Index
