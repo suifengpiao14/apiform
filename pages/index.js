@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { withTheme } from '@rjsf/core';
 import Theme from '@rjsf/mui';
 import validator from "@rjsf/validator-ajv8";
@@ -17,17 +17,32 @@ import useSWR from 'swr'
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 
-export default () => {
-  const { responseData, setResponseData } = useState({})
+const Index = () => {
+  const [responseData, setResponseData] = useState({})
+  const [formData, setFormData] = React.useState({});
+  const [isLoading, setLoading] = useState(false)
+
+  const [allSchema, setAllSchema] = useState({ schema: {}, uiSchema: {} })
   const router = useRouter();
   const { api } = router.query;
-  //const data={schema:{},example:{},uiSchema:{}}
-  const error = null
-  //const { data, error } = useSWR(api, fetcher)
-  if (error) return <div>Failed to load</div>
-  if (!data) return <div>Loading...</div>
-  const { schema, example, uiSchema } = data
-  const [formData, setFormData] = React.useState(example);
+  const { schema, uiSchema } = allSchema
+
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+    setLoading(true)
+    fetch(api)
+      .then((res) => res.json())
+      .then((data) => {
+        const { example, ...allSchema } = data
+        setAllSchema(allSchema)
+        setFormData(example)
+        setLoading(false)
+      })
+  }, [api])
+
+  if (isLoading) return <div>Loading...</div>
   return <Fragment>
     <Form
       schema={schema}
@@ -92,3 +107,6 @@ function filterServer(name, servers) {
   });
   return server
 }
+
+
+export default Index

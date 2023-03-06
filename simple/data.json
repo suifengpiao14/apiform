@@ -31,10 +31,14 @@
                 "required": [
                     "title",
                     "advertiserId",
+                    "summary",
+                    "image",
+                    "link",
+                    "type",
                     "beginAt",
                     "endAt",
-                    "index",
-                    "size"
+                    "remark",
+                    "valueObj"
                 ],
                 "properties": {
                     "title": {
@@ -44,33 +48,50 @@
                     },
                     "advertiserId": {
                         "type": "string",
-                        "format": "int",
                         "title": "广告主",
                         "example": "123"
                     },
+                    "summary": {
+                        "type": "string",
+                        "title": "广告素材-文字描述",
+                        "example": "下单有豪礼"
+                    },
+                    "image": {
+                        "type": "string",
+                        "title": "广告素材-图片地址",
+                        "example": "http://image.service.cn/new_year.jpg\""
+                    },
+                    "link": {
+                        "type": "string",
+                        "title": "连接地址",
+                        "example": "http://gift.servcice.cn/new_year_git"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "广告素材(类型),text-文字,image-图片,vido-视频",
+                        "example": "image"
+                    },
                     "beginAt": {
                         "type": "string",
-                        "format": "datetime",
-                        "title": "可以投放开始时间",
+                        "title": "投放开始时间",
                         "example": "2023-01-12 00:00:00"
                     },
                     "endAt": {
                         "type": "string",
-                        "format": "datetime",
                         "title": "投放结束时间",
                         "example": "2023-01-30 00:00:00"
                     },
-                    "index": {
+                    "remark": {
                         "type": "string",
-                        "format": "int",
-                        "title": "页索引,0开始",
-                        "default": "0"
+                        "title": "备注",
+                        "example": "营养早餐广告"
                     },
-                    "size": {
+                    "valueObj": {
                         "type": "string",
-                        "format": "int",
-                        "title": "每页数量",
-                        "default": "10"
+                        "title": "json扩展,广告的值属性对象",
+                        "example": {
+                            "tag": "index"
+                        }
                     }
                 }
             },
@@ -86,7 +107,7 @@
                     "path": {
                         "type": "string",
                         "title": "请求路径",
-                        "default": "/admin/v1/ad/list",
+                        "default": "/admin/v1/ad/add",
                         "readOnly": true
                     },
                     "method": {
@@ -98,13 +119,13 @@
                     "description": {
                         "type": "string",
                         "title": "描述",
-                        "default": "广告列表",
+                        "default": "新增广告",
                         "readOnly": true
                     },
                     "requestPreScript": {
                         "type": "string",
                         "title": "前置脚本",
-                        "default": "var signature=\\\"javascript\\\"",
+                        "default": "var signature=\"javascript\"",
                         "readOnly": true
                     },
                     "variables": {
@@ -119,8 +140,7 @@
                                 },
                                 "value": {
                                     "type": "string",
-                                    "title": "变量值",
-                                    "readOnly": false
+                                    "title": "变量值"
                                 },
                                 "description": {
                                     "type": "string",
@@ -217,16 +237,20 @@
         "body": {
             "title": "新年豪礼",
             "advertiserId": "123",
+            "summary": "下单有豪礼",
+            "image": "http://image.service.cn/new_year.jpg\"",
+            "link": "http://gift.servcice.cn/new_year_git",
+            "type": "image",
             "beginAt": "2023-01-12 00:00:00",
             "endAt": "2023-01-30 00:00:00",
-            "index": "0",
-            "size": "10"
+            "remark": "营养早餐广告",
+            "valueObj": "{\"tag\":\"index\"}"
         },
         "service": {
-            "path": "/admin/v1/ad/list",
+            "path": "/admin/v1/ad/add",
             "method": "POST",
-            "description": "广告列表",
-            "requestPreScript": "var signature=\\\"javascript\\\"",
+            "description": "新增广告",
+            "requestPreScript": "var signature=\"javascript\"",
             "variables": [
                 {
                     "name": "serviceId",
@@ -261,12 +285,6 @@
         }
     },
     "uiSchema": {
-        "ui:order": [
-            "service",
-            "header",
-            "body",
-            "*"
-        ],
         "service": {
             "serverData": {
                 "ui:classNames": "hidden"
@@ -275,11 +293,14 @@
                 "ui:options": {
                     "addable": false,
                     "removable": false
-                },
-                "value": {
-                    "ui:widget": "textarea"
                 }
             }
-        }
+        },
+        "ui:order": [
+            "service",
+            "header",
+            "body",
+            "*"
+        ]
     }
 }
