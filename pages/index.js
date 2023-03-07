@@ -19,8 +19,8 @@ export default () => {
   const [responseData, setResponseData] = useState({})
   const [formData, setFormData] = React.useState({});
   const [isLoading, setLoading] = useState(false)
-
   const [allSchema, setAllSchema] = useState({ schema: {}, uiSchema: {} })
+  const [loadDataError, setLoadDataError] = useState(null)
   const router = useRouter();
   const { api } = router.query;
   const { schema, uiSchema } = allSchema
@@ -31,15 +31,23 @@ export default () => {
     }
     setLoading(true)
     fetch(api)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(res.statusText)
+      })
       .then((data) => {
         const { example, ...allSchema } = data
         setAllSchema(allSchema)
         setFormData(example)
+      }).catch((err) => {
+        setLoadDataError(err)
+      }).finally(() => {
         setLoading(false)
       })
   }, [api])
-
+  if (loadDataError) return <div>{loadDataError}</div>
   if (isLoading) return <div>Loading...</div>
   return <Fragment>
     <Form
