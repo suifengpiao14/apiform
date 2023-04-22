@@ -19,8 +19,8 @@ export default () => {
   const [responseData, setResponseData] = useState({})
   const [formData, setFormData] = React.useState({});
   const [isLoading, setLoading] = useState(false)
+
   const [allSchema, setAllSchema] = useState({ schema: {}, uiSchema: {} })
-  const [loadDataError, setLoadDataError] = useState(null)
   const router = useRouter();
   const { api } = router.query;
   const { schema, uiSchema } = allSchema
@@ -31,23 +31,15 @@ export default () => {
     }
     setLoading(true)
     fetch(api)
-      .then((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(res.statusText)
-      })
+      .then((res) => res.json())
       .then((data) => {
         const { example, ...allSchema } = data
         setAllSchema(allSchema)
         setFormData(example)
-      }).catch((err) => {
-        setLoadDataError(err)
-      }).finally(() => {
         setLoading(false)
       })
   }, [api])
-  if (loadDataError) return <div>{loadDataError}</div>
+
   if (isLoading) return <div>Loading...</div>
   return <Fragment>
     <Form
@@ -75,22 +67,27 @@ export default () => {
  * @param {*} formData 
  * @returns 
  */
-const proxy = "http://doc-proxy.huishoubao.com"
 function request(formData) {
   const { service: { method, path, requestPreScript, variables, server: serverName, serverData: servers, requestPostScript }, ...data } = formData
   const server = filterServer(serverName, servers)
   data.variables = variables
   runBefore(requestPreScript, data)
   data.header = data.header || {}
-  const url = new URL(server.host)
-  data.header["X-REAL-HOST"] = url.host
-  if (server.proxy != "") {
-    data.header["X-REAL-ADDRESS"] = server.proxy
+  data.header["X-REAL-DOMAIN"] = server.domain
+  data.header["X-REAL-IP"] = server.ip
+  let baseURL = server.httpProxy
+  if (!baseURL) {
+    const url=new URL(server.domain)
+    if (!!server.ip){
+      url.host = server.ip
+    }
+    baseURL=url.toString()
   }
+
   const config = {
     url: path,
     method,
-    baseURL: proxy,
+    baseURL: baseURL,
     headers: data.header,
     params: data.query,
     timeout: 30000000,
