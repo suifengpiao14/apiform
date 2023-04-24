@@ -55,7 +55,10 @@ export default () => {
     <br />
     <div>
       返回信息:
-      {JSON.stringify(responseData, " ")}
+      <pre>
+        {JSON.stringify(responseData, " ", 2)}
+      </pre>
+
     </div>
   </Fragment>;
 };
@@ -77,11 +80,11 @@ function request(formData) {
   data.header["X-REAL-IP"] = server.ip
   let baseURL = server.httpProxy
   if (!baseURL) {
-    const url=new URL(server.domain)
-    if (!!server.ip){
+    const url = new URL(server.domain)
+    if (!!server.ip) {
       url.host = server.ip
     }
-    baseURL=url.toString()
+    baseURL = url.toString()
   }
 
   const config = {
@@ -91,7 +94,7 @@ function request(formData) {
     headers: data.header,
     params: data.query,
     timeout: 30000000,
-    withCredentials: true,
+    withCredentials: false,
     data: data.body
   }
 
