@@ -1,7 +1,8 @@
 {
-  "firstName": {
-    "ui:autofocus": true,
-    "ui:emptyValue": ""
+  "body": {
+    "title": {
+      "ui:emptyValue": ""
+    }
   },
   "selectTest": {
     "ui:widget": "material-multiselect",

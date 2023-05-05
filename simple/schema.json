@@ -1,47 +1,241 @@
 {
-  "title": "A registration form v2",
-  "description": "A simple form example.",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "required": ["firstName", "lastName"],
+  "required": [],
   "properties": {
-    "firstName": {
+    "header": {
+      "type": "object",
+      "required": [
+        "content-type",
+        "appid",
+        "signature"
+      ],
+      "properties": {
+        "content-type": {
+          "comment": "文件格式",
+          "type": "string",
+          "title": "文件格式",
+          "default": "application/json"
+        },
+        "appid": {
+          "comment": "访问服务的备案id",
+          "type": "string",
+          "title": "访问服务的备案id",
+          "example": "er45e7r"
+        },
+        "signature": {
+          "comment": "签名,外网访问需开启签名",
+          "type": "string",
+          "title": "签名,外网访问需开启签名",
+          "example": "erefdsf154"
+        }
+      }
+    },
+    "title": {
+      "comment": "广告标题",
+      "empty": true,
       "type": "string",
-      "title": "First name"
+      "title": "广告标题",
+      "example": "新年豪礼"
     },
-    "lastName": {
-      "type": "string",
-      "title": "Last name"
+    "body": {
+      "type": "object",
+      "required": [
+        "ownerId",
+        "beginAt",
+        "endAt",
+        "index",
+        "size"
+      ],
+      "properties": {
+        "title": {
+          "comment": "广告标题",
+          "empty": true,
+          "type": "string",
+          "title": "广告标题",
+          "example": "新年豪礼"
+        },
+        "ownerId": {
+          "comment": "广告主",
+          "type": "string",
+          "title": "广告主",
+          "example": "123"
+        },
+        "beginAt": {
+          "comment": "投放开始时间",
+          "type": "string",
+          "format": "datetime",
+          "title": "投放开始时间",
+          "example": "2023-01-12 00:00:00"
+        },
+        "endAt": {
+          "comment": "投放结束时间",
+          "type": "string",
+          "format": "datetime",
+          "title": "投放结束时间",
+          "example": "2023-01-30 00:00:00"
+        },
+        "index": {
+          "comment": "页索引,0开始",
+          "type": "string",
+          "format": "int",
+          "title": "页索引,0开始",
+          "default": "0"
+        },
+        "size": {
+          "comment": "每页数量",
+          "type": "string",
+          "format": "int",
+          "title": "每页数量",
+          "default": "10"
+        }
+      }
     },
-    "currency": {
-      "type": "number",
-      "title": "Currency"
-    },
-    "select": {
-      "type": "string",
-      "title": "Example select",
-      "enum": ["Yes", "No"]
-    },
-    "react-select": {
-      "type": "string",
-      "title": "Example select",
-      "enum": ["Yes", "No"]
-    },
-    "age": {
-      "type": "integer",
-      "title": "Age"
-    },
-    "date": {
-      "type": "material-date",
-      "title": "Date"
-    },
-    "password": {
-      "type": "string",
-      "title": "Password",
-      "minLength": 3
-    },
-    "telephone": {
-      "type": "string",
-      "title": "Telephone"
+    "service": {
+      "type": "object",
+      "required": [
+        "path",
+        "method",
+        "description",
+        "server"
+      ],
+      "properties": {
+        "path": {
+          "comment": "请求路径",
+          "type": "string",
+          "title": "请求路径",
+          "default": "/admin/v1/ad/list",
+          "readOnly": true
+        },
+        "method": {
+          "comment": "请求方法",
+          "type": "string",
+          "title": "请求方法",
+          "default": "POST",
+          "readOnly": true
+        },
+        "description": {
+          "comment": "描述",
+          "type": "string",
+          "title": "描述",
+          "default": "广告列表",
+          "readOnly": true
+        },
+        "requestPreScript": {
+          "comment": "前置脚本",
+          "type": "string",
+          "title": "前置脚本",
+          "default": "var signature=\"javascript\"",
+          "readOnly": true
+        },
+        "variables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "comment": "变量名称",
+                "type": "string",
+                "title": "变量名称",
+                "readOnly": true
+              },
+              "value": {
+                "comment": "变量值",
+                "type": "string",
+                "title": "变量值"
+              },
+              "description": {
+                "comment": "说明",
+                "type": "string",
+                "title": "说明",
+                "readOnly": true
+              }
+            }
+          },
+          "example": [
+            {
+              "name": "serviceId",
+              "value": "1234,xyuientg,74ere",
+              "description": "服务ID"
+            }
+          ]
+        },
+        "server": {
+          "comment": "请求地址",
+          "type": "string",
+          "title": "请求地址",
+          "default": "dev",
+          "oneOf": [
+            {
+              "const": "dev",
+              "title": "dev-开发环境"
+            },
+            {
+              "const": "test",
+              "title": "test-测试环境"
+            },
+            {
+              "const": "prod",
+              "title": "prod-正式环境"
+            }
+          ]
+        },
+        "serverData": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "comment": "名称",
+                "type": "string",
+                "title": "名称"
+              },
+              "host": {
+                "comment": "地址",
+                "type": "string",
+                "title": "地址"
+              },
+              "proxy": {
+                "comment": "代理",
+                "type": "string",
+                "title": "代理"
+              },
+              "description": {
+                "comment": "说明",
+                "type": "string",
+                "title": "说明"
+              }
+            }
+          },
+          "readOnly": true,
+          "example": [
+            {
+              "name": "dev",
+              "domain": "http://ad.micor.cn",
+              "ip": "127.0.0.1:8082",
+              "description": "开发环境",
+              "httpProxy": "",
+              "extensionIds": ""
+            },
+            {
+              "name": "test",
+              "domain": "test.domain.com",
+              "ip": "",
+              "description": "测试环境",
+              "httpProxy": "",
+              "extensionIds": ""
+            },
+            {
+              "name": "prod",
+              "domain": "http://domain.com",
+              "ip": "",
+              "description": "正式环境",
+              "httpProxy": "",
+              "extensionIds": ""
+            }
+          ]
+        }
+      }
     }
   }
 }
