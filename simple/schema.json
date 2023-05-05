@@ -42,7 +42,6 @@
       "type": "object",
       "required": [
         "ownerId",
-        "beginAt",
         "endAt",
         "index",
         "size"
@@ -66,7 +65,8 @@
           "type": "string",
           "format": "datetime",
           "title": "投放开始时间",
-          "example": "2023-01-12 00:00:00"
+          "example": "2023-01-12 00:00:00",
+          "default": ""
         },
         "endAt": {
           "comment": "投放结束时间",

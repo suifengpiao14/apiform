@@ -5,6 +5,7 @@ import validator from "@rjsf/validator-ajv8";
 import axios from 'axios';
 import { runBefore, runAfter } from '../lib/functions';
 import URL from 'url-parse'
+import merge from 'deepmerge-json';
 // Make modifications to the theme with your own fields and widgets
 
 const Form = withTheme(Theme);
@@ -23,7 +24,7 @@ export default () => {
   const [allSchema, setAllSchema] = useState({ schema: {}, uiSchema: {} })
   const router = useRouter();
   const { api } = router.query;
-  const { schema, uiSchema } = allSchema
+  const { schema, uiSchema, defaultJson } = allSchema
 
   useEffect(() => {
     if (!api) {
@@ -48,9 +49,12 @@ export default () => {
       uiSchema={uiSchema}
       validator={validator}
       onChange={({ formData }) => setFormData(formData)}
-      onSubmit={({ formData }) => request(formData).then(res => {
-        setResponseData(res.data)
-      })}
+      onSubmit={({ formData }) => {
+        const requestData = merge(defaultJson, formData)
+        return request(requestData).then(res => {
+          setResponseData(res.data)
+        })
+      }}
     />
     <br />
     <div>
