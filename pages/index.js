@@ -90,7 +90,10 @@ function request(formData) {
     }
     baseURL = url.toString()
   }
-
+  if (method?.toLowerCase()=="get"){
+    data.query = data.body
+    data.body=null
+  }
   const config = {
     url: path,
     method,
